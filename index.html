@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Roleplay Application Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: url("ASSETS/Trevor.jpeg") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 40px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      animation: slideFade 1.2s ease forwards;
+      transform: translateY(50px);
+      opacity: 0;
+      transition: all 0.4s ease-in-out;
+    }
+
+    @keyframes slideFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 5px #000;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+      color: #f0f0f0;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      background: #fff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.3);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px;
+      background: linear-gradient(to right, #5865F2, #4752C4);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #4752C4, #5865F2);
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #e0e0e0;
+      margin-top: 20px;
+      text-shadow: 0 0 2px #000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Roleplay Application</h1>
+    <form id="rpForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="John Doe" required />
+
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" placeholder="18" required />
+
+      <label for="charName">In-Game Character Name</label>
+      <input type="text" id="charName" name="charName" placeholder="Michael Russo" required />
+
+      <label for="experience">Years of RP Experience</label>
+      <input type="number" id="experience" name="experience" placeholder="2" required />
+
+      <label for="rules">Have you read the rules?</label>
+      <select name="rules" id="rules" required>
+        <option value="">Select</option>
+        <option value="Yes ✅">Yes</option>
+        <option value="No ❌">No</option>
+      </select>
+
+      <button type="submit">Submit Application</button>
+    </form>
+
+    <div class="footer">© 2025 Elite RP | All rights reserved.</div>
+  </div>
+
+  <script>
+    document.getElementById("rpForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = {
+        name: formData.get("name"),
+        age: formData.get("age"),
+        charName: formData.get("charName"),
+        experience: formData.get("experience"),
+        rules: formData.get("rules"),
+      };
+
+      const response = await fetch("http://ecrpapp.optikl.ink/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        alert("✅ Application sent to Discord!");
+        this.reset();
+      } else {
+        alert("❌ Failed to send.");
+      }
+    });
+  </script>
+</body>
+</html>
+
