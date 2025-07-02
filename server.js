@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -6,9 +7,10 @@ const axios = require('axios');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('public')); // serve frontend
 
 // Replace with your actual webhook
-const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1389892715138912336/BCFVGxBPdVSPTzGOJeY4FAaieKK0E7oQrePdbKH5ToskbtCj-7RibLvqObHdqZlhdEZM';
+const DISCORD_WEBHOOK_URL = process.env.WEBHOOK_URL;
 
 app.post('/submit', async (req, res) => {
   const { name, age, charName, experience, rules } = req.body;
